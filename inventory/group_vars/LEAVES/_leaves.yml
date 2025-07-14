@@ -1,0 +1,61 @@
+---
+type: l3leaf
+
+l3leaf:
+  defaults:
+    platform: cEOS-lab
+
+    # Address pool for loopback0 used for BGP EVPN sessions
+    loopback_ipv4_pool: 10.255.0.0/27
+
+    # Offset - num of spine swt
+    loopback_ipv4_offset: 2
+
+    # Address pool for Virtual Tunnel EndPoint (VxLAN src/dst)
+    vtep_loopback_ipv4_pool: 10.255.1.0/27
+
+    # Ansible device hostnames for establishing neighborship
+    uplink_switches: ['DC31_SPINE_1', 'DC31_SPINE_2']
+
+    # Address pool for uplink
+    uplink_ipv4_pool: 10.255.255.0/27
+
+    # Address pool for MLAG
+    mlag_peer_ipv4_pool: 10.255.1.64/27
+
+    # Address pool for iBGP peering between MLAG
+    mlag_peer_l3_ipv4_pool: 10.255.1.96/27
+
+    # Virtual router mac for VNIs assigned to Leaf switches in format xx:xx:xx:xx:xx:xx
+    virtual_router_mac_address: 00:1c:73:00:00:99
+    spanning_tree_priority: 4096
+    spanning_tree_mode: mstp
+
+  # NODES
+  node_groups:
+    - group: DC31_LEAVES_1
+      # ASN to be used by BGP for the group
+      bgp_as: 65101
+      nodes:
+        # Definition of hostnames under the node_group
+        - name: DC31_LEAF_1_1
+          id: 1
+          mgmt_ip: 172.19.180.11/20
+          # Definition of the port to be used in the uplink device facing this device.
+          # Note that the number of elements in this list must match the length of 'uplink_switches' as well as 'uplink_interfaces'
+          uplink_switch_interfaces: [Ethernet1, Ethernet2]
+        - name: DC31_LEAF_1_2
+          id: 2
+          mgmt_ip: 172.19.180.12/20
+          uplink_switch_interfaces: [Ethernet1, Ethernet2]
+    - group: DC31_LEAVES_2
+      bgp_as: 65102
+      nodes:
+        - name: DC31_LEAF_2_1
+          id: 3
+          mgmt_ip: 172.19.180.21/20
+          uplink_switch_interfaces: [Ethernet1, Ethernet2]
+        - name: DC31_LEAF_2_2
+          id: 4
+          mgmt_ip: 172.19.180.22/20
+          uplink_switch_interfaces: [Ethernet1, Ethernet2]
