@@ -1,0 +1,16 @@
+---
+# Defining the use of eAPI
+ansible_connection: ansible.netcommon.httpapi
+
+# Used OS
+ansible_network_os: arista.eos.eos
+
+# access
+ansible_user: cvpadmin
+ansible_password: arista123
+
+# Permission for enable mode
+ansible_become: true
+ansible_become_method: enable
+ansible_httpapi_use_ssl: true
+ansible_httpapi_validate_certs: false

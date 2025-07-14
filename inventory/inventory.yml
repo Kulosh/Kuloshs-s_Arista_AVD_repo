@@ -1,0 +1,22 @@
+all:
+  children:
+    FABRIC:
+      children:
+        DC31:
+          children:
+            DC31_SPINES:
+              hosts:
+                DC31_SPINE_1:
+                  type: spine
+                DC31_SPINE_2:
+                  type: spine
+            DC31_LEAVES:
+              hosts:
+                DC31_LEAF_1_1:
+                  type: l3leaf
+                DC31_LEAF_1_2:
+                  type: l3leaf
+                DC31_LEAF_2_1:
+                  type: l3leaf
+                DC31_LEAF_2_2:
+                  type: l3leaf
