@@ -206,38 +206,38 @@ vlan internal order ascending range 1006 1199
 
 | Interface | Description | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1 | P2P_DC31_LEAF_1_1_Ethernet2 | - | 10.255.255.2/31 | default | 1500 | False | - | - |
-| Ethernet2 | P2P_DC31_LEAF_1_2_Ethernet2 | - | 10.255.255.6/31 | default | 1500 | False | - | - |
-| Ethernet3 | P2P_DC31_LEAF_2_1_Ethernet2 | - | 10.255.255.10/31 | default | 1500 | False | - | - |
-| Ethernet4 | P2P_DC31_LEAF_2_2_Ethernet2 | - | 10.255.255.14/31 | default | 1500 | False | - | - |
+| Ethernet1 | P2P_DC31_L3_LEAF_1_1_Ethernet2 | - | 10.255.255.2/31 | default | 1500 | False | - | - |
+| Ethernet2 | P2P_DC31_L3_LEAF_1_2_Ethernet2 | - | 10.255.255.6/31 | default | 1500 | False | - | - |
+| Ethernet3 | P2P_DC31_L3_LEAF_2_1_Ethernet2 | - | 10.255.255.10/31 | default | 1500 | False | - | - |
+| Ethernet4 | P2P_DC31_L3_LEAF_2_2_Ethernet2 | - | 10.255.255.14/31 | default | 1500 | False | - | - |
 
 #### Ethernet Interfaces Device Configuration
 
 ```eos
 !
 interface Ethernet1
-   description P2P_DC31_LEAF_1_1_Ethernet2
+   description P2P_DC31_L3_LEAF_1_1_Ethernet2
    no shutdown
    mtu 1500
    no switchport
    ip address 10.255.255.2/31
 !
 interface Ethernet2
-   description P2P_DC31_LEAF_1_2_Ethernet2
+   description P2P_DC31_L3_LEAF_1_2_Ethernet2
    no shutdown
    mtu 1500
    no switchport
    ip address 10.255.255.6/31
 !
 interface Ethernet3
-   description P2P_DC31_LEAF_2_1_Ethernet2
+   description P2P_DC31_L3_LEAF_2_1_Ethernet2
    no shutdown
    mtu 1500
    no switchport
    ip address 10.255.255.10/31
 !
 interface Ethernet4
-   description P2P_DC31_LEAF_2_2_Ethernet2
+   description P2P_DC31_L3_LEAF_2_2_Ethernet2
    no shutdown
    mtu 1500
    no switchport
@@ -372,16 +372,16 @@ router bgp 65100
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor 10.255.255.3 peer group IPv4-UNDERLAY-PEERS
    neighbor 10.255.255.3 remote-as 65101
-   neighbor 10.255.255.3 description DC31_LEAF_1_1_Ethernet2
+   neighbor 10.255.255.3 description DC31_L3_LEAF_1_1_Ethernet2
    neighbor 10.255.255.7 peer group IPv4-UNDERLAY-PEERS
    neighbor 10.255.255.7 remote-as 65101
-   neighbor 10.255.255.7 description DC31_LEAF_1_2_Ethernet2
+   neighbor 10.255.255.7 description DC31_L3_LEAF_1_2_Ethernet2
    neighbor 10.255.255.11 peer group IPv4-UNDERLAY-PEERS
    neighbor 10.255.255.11 remote-as 65102
-   neighbor 10.255.255.11 description DC31_LEAF_2_1_Ethernet2
+   neighbor 10.255.255.11 description DC31_L3_LEAF_2_1_Ethernet2
    neighbor 10.255.255.15 peer group IPv4-UNDERLAY-PEERS
    neighbor 10.255.255.15 remote-as 65102
-   neighbor 10.255.255.15 description DC31_LEAF_2_2_Ethernet2
+   neighbor 10.255.255.15 description DC31_L3_LEAF_2_2_Ethernet2
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family ipv4

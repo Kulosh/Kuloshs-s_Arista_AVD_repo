@@ -5,46 +5,36 @@ enable_password:
   disabled: true
 ethernet_interfaces:
 - name: Ethernet1
-  description: P2P_DC31_L3_LEAF_1_1_Ethernet1
+  description: P2P_DC31_SPINE_1_Ethernet4
   shutdown: false
   mtu: 1500
-  ip_address: 10.255.255.0/31
-  peer: DC31_L3_LEAF_1_1
-  peer_interface: Ethernet1
-  peer_type: l3leaf
+  ip_address: 10.255.255.13/31
+  peer: DC31_SPINE_1
+  peer_interface: Ethernet4
+  peer_type: spine
   switchport:
     enabled: false
 - name: Ethernet2
-  description: P2P_DC31_L3_LEAF_1_2_Ethernet1
+  description: P2P_DC31_SPINE_2_Ethernet4
   shutdown: false
   mtu: 1500
-  ip_address: 10.255.255.4/31
-  peer: DC31_L3_LEAF_1_2
-  peer_interface: Ethernet1
-  peer_type: l3leaf
+  ip_address: 10.255.255.15/31
+  peer: DC31_SPINE_2
+  peer_interface: Ethernet4
+  peer_type: spine
   switchport:
     enabled: false
 - name: Ethernet3
-  description: P2P_DC31_L3_LEAF_2_1_Ethernet1
+  description: P2P_DC31_L2_LEAF_2_1_Ethernet2
   shutdown: false
   mtu: 1500
-  ip_address: 10.255.255.8/31
-  peer: DC31_L3_LEAF_2_1
-  peer_interface: Ethernet1
-  peer_type: l3leaf
+  ip_address: 10.255.255.6/31
+  peer: DC31_L2_LEAF_2_1
+  peer_interface: Ethernet2
+  peer_type: l2leaf
   switchport:
     enabled: false
-- name: Ethernet4
-  description: P2P_DC31_L3_LEAF_2_2_Ethernet1
-  shutdown: false
-  mtu: 1500
-  ip_address: 10.255.255.12/31
-  peer: DC31_L3_LEAF_2_2
-  peer_interface: Ethernet1
-  peer_type: l3leaf
-  switchport:
-    enabled: false
-hostname: DC31_SPINE_1
+hostname: DC31_L3_LEAF_2_2
 ip_domain_lookup:
   source_interfaces:
   - name: Management1
@@ -63,7 +53,7 @@ loopback_interfaces:
 - name: Loopback0
   description: ROUTER_ID
   shutdown: false
-  ip_address: 10.255.0.1/32
+  ip_address: 10.255.0.6/32
 management_api_http:
   enable_https: true
   enable_vrfs:
@@ -73,12 +63,12 @@ management_interfaces:
   description: OOB_MANAGEMENT
   shutdown: false
   vrf: MGMT
-  ip_address: 172.19.180.1/20
+  ip_address: 172.19.180.22/20
   type: oob
   gateway: 172.19.177.131
 metadata:
   platform: cEOS-lab
-  rack: '1'
+  rack: '2'
   fabric_name: FABRIC
 ntp:
   local_interface:
@@ -101,8 +91,8 @@ route_maps:
     match:
     - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 router_bgp:
-  as: '65100'
-  router_id: 10.255.0.1
+  as: '65102'
+  router_id: 10.255.0.6
   maximum_paths:
     paths: 4
     ecmp: 4
@@ -118,26 +108,21 @@ router_bgp:
     send_community: all
     maximum_routes: 12000
   neighbors:
-  - ip_address: 10.255.255.1
+  - ip_address: 10.255.255.12
     peer_group: IPv4-UNDERLAY-PEERS
-    remote_as: '65101'
-    peer: DC31_L3_LEAF_1_1
-    description: DC31_L3_LEAF_1_1_Ethernet1
-  - ip_address: 10.255.255.5
+    remote_as: '65100'
+    peer: DC31_SPINE_1
+    description: DC31_SPINE_1_Ethernet4
+  - ip_address: 10.255.255.14
     peer_group: IPv4-UNDERLAY-PEERS
-    remote_as: '65101'
-    peer: DC31_L3_LEAF_1_2
-    description: DC31_L3_LEAF_1_2_Ethernet1
-  - ip_address: 10.255.255.9
+    remote_as: '65100'
+    peer: DC31_SPINE_2
+    description: DC31_SPINE_2_Ethernet4
+  - ip_address: 10.255.255.7
     peer_group: IPv4-UNDERLAY-PEERS
-    remote_as: '65102'
-    peer: DC31_L3_LEAF_2_1
-    description: DC31_L3_LEAF_2_1_Ethernet1
-  - ip_address: 10.255.255.13
-    peer_group: IPv4-UNDERLAY-PEERS
-    remote_as: '65102'
-    peer: DC31_L3_LEAF_2_2
-    description: DC31_L3_LEAF_2_2_Ethernet1
+    remote_as: '65104'
+    peer: DC31_L2_LEAF_2_1
+    description: DC31_L2_LEAF_2_1_Ethernet2
   redistribute:
     connected:
       enabled: true

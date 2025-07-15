@@ -17,10 +17,12 @@
 
 | POD | Type | Node | Management IP | Platform | Provisioned in CloudVision | Serial Number |
 | --- | ---- | ---- | ------------- | -------- | -------------------------- | ------------- |
-| FABRIC | l3leaf | DC31_LEAF_1_1 | 172.19.180.11/20 | cEOS-lab | Provisioned | - |
-| FABRIC | l3leaf | DC31_LEAF_1_2 | 172.19.180.12/20 | cEOS-lab | Provisioned | - |
-| FABRIC | l3leaf | DC31_LEAF_2_1 | 172.19.180.21/20 | cEOS-lab | Provisioned | - |
-| FABRIC | l3leaf | DC31_LEAF_2_2 | 172.19.180.22/20 | cEOS-lab | Provisioned | - |
+| FABRIC | l2leaf | DC31_L2_LEAF_1_1 | 172.19.180.13/20 | cEOS-lab | Provisioned | - |
+| FABRIC | l2leaf | DC31_L2_LEAF_2_1 | 172.19.180.23/20 | cEOS-lab | Provisioned | - |
+| FABRIC | l3leaf | DC31_L3_LEAF_1_1 | 172.19.180.11/20 | cEOS-lab | Provisioned | - |
+| FABRIC | l3leaf | DC31_L3_LEAF_1_2 | 172.19.180.12/20 | cEOS-lab | Provisioned | - |
+| FABRIC | l3leaf | DC31_L3_LEAF_2_1 | 172.19.180.21/20 | cEOS-lab | Provisioned | - |
+| FABRIC | l3leaf | DC31_L3_LEAF_2_2 | 172.19.180.22/20 | cEOS-lab | Provisioned | - |
 | FABRIC | spine | DC31_SPINE_1 | 172.19.180.1/20 | cEOS-lab | Provisioned | - |
 | FABRIC | spine | DC31_SPINE_2 | 172.19.180.2/20 | cEOS-lab | Provisioned | - |
 
@@ -35,14 +37,18 @@
 
 | Type | Node | Node Interface | Peer Type | Peer Node | Peer Interface |
 | ---- | ---- | -------------- | --------- | ----------| -------------- |
-| l3leaf | DC31_LEAF_1_1 | Ethernet1 | spine | DC31_SPINE_1 | Ethernet1 |
-| l3leaf | DC31_LEAF_1_1 | Ethernet2 | spine | DC31_SPINE_2 | Ethernet1 |
-| l3leaf | DC31_LEAF_1_2 | Ethernet1 | spine | DC31_SPINE_1 | Ethernet2 |
-| l3leaf | DC31_LEAF_1_2 | Ethernet2 | spine | DC31_SPINE_2 | Ethernet2 |
-| l3leaf | DC31_LEAF_2_1 | Ethernet1 | spine | DC31_SPINE_1 | Ethernet3 |
-| l3leaf | DC31_LEAF_2_1 | Ethernet2 | spine | DC31_SPINE_2 | Ethernet3 |
-| l3leaf | DC31_LEAF_2_2 | Ethernet1 | spine | DC31_SPINE_1 | Ethernet4 |
-| l3leaf | DC31_LEAF_2_2 | Ethernet2 | spine | DC31_SPINE_2 | Ethernet4 |
+| l2leaf | DC31_L2_LEAF_1_1 | Ethernet1 | l3leaf | DC31_L3_LEAF_1_1 | Ethernet3 |
+| l2leaf | DC31_L2_LEAF_1_1 | Ethernet2 | l3leaf | DC31_L3_LEAF_1_2 | Ethernet3 |
+| l2leaf | DC31_L2_LEAF_2_1 | Ethernet1 | l3leaf | DC31_L3_LEAF_2_1 | Ethernet3 |
+| l2leaf | DC31_L2_LEAF_2_1 | Ethernet2 | l3leaf | DC31_L3_LEAF_2_2 | Ethernet3 |
+| l3leaf | DC31_L3_LEAF_1_1 | Ethernet1 | spine | DC31_SPINE_1 | Ethernet1 |
+| l3leaf | DC31_L3_LEAF_1_1 | Ethernet2 | spine | DC31_SPINE_2 | Ethernet1 |
+| l3leaf | DC31_L3_LEAF_1_2 | Ethernet1 | spine | DC31_SPINE_1 | Ethernet2 |
+| l3leaf | DC31_L3_LEAF_1_2 | Ethernet2 | spine | DC31_SPINE_2 | Ethernet2 |
+| l3leaf | DC31_L3_LEAF_2_1 | Ethernet1 | spine | DC31_SPINE_1 | Ethernet3 |
+| l3leaf | DC31_L3_LEAF_2_1 | Ethernet2 | spine | DC31_SPINE_2 | Ethernet3 |
+| l3leaf | DC31_L3_LEAF_2_2 | Ethernet1 | spine | DC31_SPINE_1 | Ethernet4 |
+| l3leaf | DC31_L3_LEAF_2_2 | Ethernet2 | spine | DC31_SPINE_2 | Ethernet4 |
 
 ## Fabric IP Allocation
 
@@ -50,35 +56,41 @@
 
 | Uplink IPv4 Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | ---------------- | ------------------- | ------------------ | ------------------ |
-| 10.255.255.0/27 | 32 | 16 | 50.0 % |
+| 10.255.255.0/27 | 32 | 24 | 75.0 % |
 
 ### Point-To-Point Links Node Allocation
 
 | Node | Node Interface | Node IP Address | Peer Node | Peer Interface | Peer IP Address |
 | ---- | -------------- | --------------- | --------- | -------------- | --------------- |
-| DC31_LEAF_1_1 | Ethernet1 | 10.255.255.1/31 | DC31_SPINE_1 | Ethernet1 | 10.255.255.0/31 |
-| DC31_LEAF_1_1 | Ethernet2 | 10.255.255.3/31 | DC31_SPINE_2 | Ethernet1 | 10.255.255.2/31 |
-| DC31_LEAF_1_2 | Ethernet1 | 10.255.255.5/31 | DC31_SPINE_1 | Ethernet2 | 10.255.255.4/31 |
-| DC31_LEAF_1_2 | Ethernet2 | 10.255.255.7/31 | DC31_SPINE_2 | Ethernet2 | 10.255.255.6/31 |
-| DC31_LEAF_2_1 | Ethernet1 | 10.255.255.9/31 | DC31_SPINE_1 | Ethernet3 | 10.255.255.8/31 |
-| DC31_LEAF_2_1 | Ethernet2 | 10.255.255.11/31 | DC31_SPINE_2 | Ethernet3 | 10.255.255.10/31 |
-| DC31_LEAF_2_2 | Ethernet1 | 10.255.255.13/31 | DC31_SPINE_1 | Ethernet4 | 10.255.255.12/31 |
-| DC31_LEAF_2_2 | Ethernet2 | 10.255.255.15/31 | DC31_SPINE_2 | Ethernet4 | 10.255.255.14/31 |
+| DC31_L2_LEAF_1_1 | Ethernet1 | 10.255.255.1/31 | DC31_L3_LEAF_1_1 | Ethernet3 | 10.255.255.0/31 |
+| DC31_L2_LEAF_1_1 | Ethernet2 | 10.255.255.3/31 | DC31_L3_LEAF_1_2 | Ethernet3 | 10.255.255.2/31 |
+| DC31_L2_LEAF_2_1 | Ethernet1 | 10.255.255.5/31 | DC31_L3_LEAF_2_1 | Ethernet3 | 10.255.255.4/31 |
+| DC31_L2_LEAF_2_1 | Ethernet2 | 10.255.255.7/31 | DC31_L3_LEAF_2_2 | Ethernet3 | 10.255.255.6/31 |
+| DC31_L3_LEAF_1_1 | Ethernet1 | 10.255.255.1/31 | DC31_SPINE_1 | Ethernet1 | 10.255.255.0/31 |
+| DC31_L3_LEAF_1_1 | Ethernet2 | 10.255.255.3/31 | DC31_SPINE_2 | Ethernet1 | 10.255.255.2/31 |
+| DC31_L3_LEAF_1_2 | Ethernet1 | 10.255.255.5/31 | DC31_SPINE_1 | Ethernet2 | 10.255.255.4/31 |
+| DC31_L3_LEAF_1_2 | Ethernet2 | 10.255.255.7/31 | DC31_SPINE_2 | Ethernet2 | 10.255.255.6/31 |
+| DC31_L3_LEAF_2_1 | Ethernet1 | 10.255.255.9/31 | DC31_SPINE_1 | Ethernet3 | 10.255.255.8/31 |
+| DC31_L3_LEAF_2_1 | Ethernet2 | 10.255.255.11/31 | DC31_SPINE_2 | Ethernet3 | 10.255.255.10/31 |
+| DC31_L3_LEAF_2_2 | Ethernet1 | 10.255.255.13/31 | DC31_SPINE_1 | Ethernet4 | 10.255.255.12/31 |
+| DC31_L3_LEAF_2_2 | Ethernet2 | 10.255.255.15/31 | DC31_SPINE_2 | Ethernet4 | 10.255.255.14/31 |
 
 ### Loopback Interfaces (BGP EVPN Peering)
 
 | Loopback Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | ------------- | ------------------- | ------------------ | ------------------ |
-| 10.255.0.0/27 | 32 | 6 | 18.75 % |
+| 10.255.0.0/27 | 32 | 8 | 25.0 % |
 
 ### Loopback0 Interfaces Node Allocation
 
 | POD | Node | Loopback0 |
 | --- | ---- | --------- |
-| FABRIC | DC31_LEAF_1_1 | 10.255.0.3/32 |
-| FABRIC | DC31_LEAF_1_2 | 10.255.0.4/32 |
-| FABRIC | DC31_LEAF_2_1 | 10.255.0.5/32 |
-| FABRIC | DC31_LEAF_2_2 | 10.255.0.6/32 |
+| FABRIC | DC31_L2_LEAF_1_1 | 10.255.0.7/32 |
+| FABRIC | DC31_L2_LEAF_2_1 | 10.255.0.8/32 |
+| FABRIC | DC31_L3_LEAF_1_1 | 10.255.0.3/32 |
+| FABRIC | DC31_L3_LEAF_1_2 | 10.255.0.4/32 |
+| FABRIC | DC31_L3_LEAF_2_1 | 10.255.0.5/32 |
+| FABRIC | DC31_L3_LEAF_2_2 | 10.255.0.6/32 |
 | FABRIC | DC31_SPINE_1 | 10.255.0.1/32 |
 | FABRIC | DC31_SPINE_2 | 10.255.0.2/32 |
 

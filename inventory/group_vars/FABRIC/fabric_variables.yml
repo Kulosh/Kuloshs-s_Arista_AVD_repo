@@ -42,44 +42,15 @@ bgp_peer_groups:
 # Default interfaces for each node type
 default_interfaces:
   - types: [spine]
-    platforms: [default]
+    platforms: [cEOS-lab]
     uplink_interfaces: [Ethernet1-2]
     downlink_interfaces: [Ethernet1-8]
   - types: [l3leaf]
-    platforms: [default]
+    platforms: [cEOS-lab]
     uplink_interfaces: [Ethernet1-2]
+    downlink_interfaces: [Ethernet3]
     mlag_interfaces: [Ethernet7-8]
+  - types: [l2leaf]
+    platforms: [cEOS-lab]
+    uplink_interfaces: [Ethernet1-2]
 
-servers:
-- name: DC31_SERVER_1
-  adapters:
-      # Server's interfaces
-    - endpoint_ports: [Ethernet1, Ethernet2]
-      # Switches and its interfaces
-      switches: [DC31_LEAF_1_1, DC31_LEAF_1_2]
-      switch_ports: [Ethernet3, Ethernet3]
-
-      # VLANs
-      vlans: 11-12,21-22
-      native_vlan: 4092
-
-      # L2 mode of the port.
-      mode: trunk
-      # Spanning tree portfast configuration on this port.
-      spanning_tree_portfast: edge
-
-      port_channel:
-        mode: active
-
-- name: DC31_SERVER_2
-  adapters:
-    - endpoint_ports: [Ethernet1, Ethernet2]
-      switch_ports: [Ethernet4, Ethernet4]
-      switches: [DC31_LEAF_2_1, DC31_LEAF_2_2]
-      vlans: 11-12,21-22
-      native_vlan: 4092
-      mode: access
-      spanning_tree_portfast: edge
-
-      port_channel:
-        mode: active

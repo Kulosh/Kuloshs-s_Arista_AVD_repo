@@ -8,9 +8,9 @@ servers:
         # Name of the server interfaces that will be used in the description of each interface
       - endpoint_ports: [Ethernet1, Ethernet2]
         # Device ports where the server ports are connected.
-        switch_ports: [Ethernet3, Ethernet3]
+        switch_ports: [Ethernet4, Ethernet4]
         # Device names where the server ports are connected.
-        switches: [DC31_LEAF_1_1, DC31_LEAF_1_2]
+        switches: [DC31_L3_LEAF_1_1, DC31_L3_LEAF_1_2]
         # VLANs that will be configured on these ports.
         vlans: 11-12,21-22
         # Native VLAN to be used on these ports.
@@ -23,11 +23,18 @@ servers:
         port_channel:
           mode: active
 
+      - endpoint_ports: [iLO]
+        switch_ports: [Ethernet4]
+        switches: [DC31_L2_LEAF_1_1]
+        vlans: 11
+        mode: access
+        spanning_tree_portfast: edge
+
   - name: DC31_SERVER_2
     adapters:
       - endpoint_ports: [Ethernet1, Ethernet2]
         switch_ports: [Ethernet4, Ethernet4]
-        switches: [DC31_LEAF_2_1, DC31_LEAF_2_2]
+        switches: [DC31_L3_LEAF_2_1, DC31_L3_LEAF_2_2]
         vlans: 11-12,21-22
         native_vlan: 4092
         mode: access
@@ -35,3 +42,10 @@ servers:
 
         port_channel:
           mode: active
+
+      - endpoint_ports: [iLO]
+        switch_ports: [Ethernet4]
+        switches: [DC31_L2_LEAF_2_1]
+        vlans: 11
+        mode: access
+        spanning_tree_portfast: edge

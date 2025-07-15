@@ -5,41 +5,41 @@ enable_password:
   disabled: true
 ethernet_interfaces:
 - name: Ethernet1
-  description: P2P_DC31_LEAF_1_1_Ethernet2
+  description: P2P_DC31_L3_LEAF_1_1_Ethernet2
   shutdown: false
   mtu: 1500
   ip_address: 10.255.255.2/31
-  peer: DC31_LEAF_1_1
+  peer: DC31_L3_LEAF_1_1
   peer_interface: Ethernet2
   peer_type: l3leaf
   switchport:
     enabled: false
 - name: Ethernet2
-  description: P2P_DC31_LEAF_1_2_Ethernet2
+  description: P2P_DC31_L3_LEAF_1_2_Ethernet2
   shutdown: false
   mtu: 1500
   ip_address: 10.255.255.6/31
-  peer: DC31_LEAF_1_2
+  peer: DC31_L3_LEAF_1_2
   peer_interface: Ethernet2
   peer_type: l3leaf
   switchport:
     enabled: false
 - name: Ethernet3
-  description: P2P_DC31_LEAF_2_1_Ethernet2
+  description: P2P_DC31_L3_LEAF_2_1_Ethernet2
   shutdown: false
   mtu: 1500
   ip_address: 10.255.255.10/31
-  peer: DC31_LEAF_2_1
+  peer: DC31_L3_LEAF_2_1
   peer_interface: Ethernet2
   peer_type: l3leaf
   switchport:
     enabled: false
 - name: Ethernet4
-  description: P2P_DC31_LEAF_2_2_Ethernet2
+  description: P2P_DC31_L3_LEAF_2_2_Ethernet2
   shutdown: false
   mtu: 1500
   ip_address: 10.255.255.14/31
-  peer: DC31_LEAF_2_2
+  peer: DC31_L3_LEAF_2_2
   peer_interface: Ethernet2
   peer_type: l3leaf
   switchport:
@@ -121,23 +121,23 @@ router_bgp:
   - ip_address: 10.255.255.3
     peer_group: IPv4-UNDERLAY-PEERS
     remote_as: '65101'
-    peer: DC31_LEAF_1_1
-    description: DC31_LEAF_1_1_Ethernet2
+    peer: DC31_L3_LEAF_1_1
+    description: DC31_L3_LEAF_1_1_Ethernet2
   - ip_address: 10.255.255.7
     peer_group: IPv4-UNDERLAY-PEERS
     remote_as: '65101'
-    peer: DC31_LEAF_1_2
-    description: DC31_LEAF_1_2_Ethernet2
+    peer: DC31_L3_LEAF_1_2
+    description: DC31_L3_LEAF_1_2_Ethernet2
   - ip_address: 10.255.255.11
     peer_group: IPv4-UNDERLAY-PEERS
     remote_as: '65102'
-    peer: DC31_LEAF_2_1
-    description: DC31_LEAF_2_1_Ethernet2
+    peer: DC31_L3_LEAF_2_1
+    description: DC31_L3_LEAF_2_1_Ethernet2
   - ip_address: 10.255.255.15
     peer_group: IPv4-UNDERLAY-PEERS
     remote_as: '65102'
-    peer: DC31_LEAF_2_2
-    description: DC31_LEAF_2_2_Ethernet2
+    peer: DC31_L3_LEAF_2_2
+    description: DC31_L3_LEAF_2_2_Ethernet2
   redistribute:
     connected:
       enabled: true

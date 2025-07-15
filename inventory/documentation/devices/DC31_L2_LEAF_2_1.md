@@ -1,4 +1,4 @@
-# DC31_SPINE_1
+# DC31_L2_LEAF_2_1
 
 ## Table of Contents
 
@@ -43,7 +43,7 @@
 
 | Management Interface | Description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management1 | OOB_MANAGEMENT | oob | MGMT | 172.19.180.1/20 | 172.19.177.131 |
+| Management1 | OOB_MANAGEMENT | oob | MGMT | 172.19.180.23/20 | 172.19.177.131 |
 
 ##### IPv6
 
@@ -59,7 +59,7 @@ interface Management1
    description OOB_MANAGEMENT
    no shutdown
    vrf MGMT
-   ip address 172.19.180.1/20
+   ip address 172.19.180.23/20
 ```
 
 ### IP Name Servers
@@ -206,42 +206,26 @@ vlan internal order ascending range 1006 1199
 
 | Interface | Description | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1 | P2P_DC31_L3_LEAF_1_1_Ethernet1 | - | 10.255.255.0/31 | default | 1500 | False | - | - |
-| Ethernet2 | P2P_DC31_L3_LEAF_1_2_Ethernet1 | - | 10.255.255.4/31 | default | 1500 | False | - | - |
-| Ethernet3 | P2P_DC31_L3_LEAF_2_1_Ethernet1 | - | 10.255.255.8/31 | default | 1500 | False | - | - |
-| Ethernet4 | P2P_DC31_L3_LEAF_2_2_Ethernet1 | - | 10.255.255.12/31 | default | 1500 | False | - | - |
+| Ethernet1 | P2P_DC31_L3_LEAF_2_1_Ethernet3 | - | 10.255.255.5/31 | default | 1500 | False | - | - |
+| Ethernet2 | P2P_DC31_L3_LEAF_2_2_Ethernet3 | - | 10.255.255.7/31 | default | 1500 | False | - | - |
 
 #### Ethernet Interfaces Device Configuration
 
 ```eos
 !
 interface Ethernet1
-   description P2P_DC31_L3_LEAF_1_1_Ethernet1
+   description P2P_DC31_L3_LEAF_2_1_Ethernet3
    no shutdown
    mtu 1500
    no switchport
-   ip address 10.255.255.0/31
+   ip address 10.255.255.5/31
 !
 interface Ethernet2
-   description P2P_DC31_L3_LEAF_1_2_Ethernet1
+   description P2P_DC31_L3_LEAF_2_2_Ethernet3
    no shutdown
    mtu 1500
    no switchport
-   ip address 10.255.255.4/31
-!
-interface Ethernet3
-   description P2P_DC31_L3_LEAF_2_1_Ethernet1
-   no shutdown
-   mtu 1500
-   no switchport
-   ip address 10.255.255.8/31
-!
-interface Ethernet4
-   description P2P_DC31_L3_LEAF_2_2_Ethernet1
-   no shutdown
-   mtu 1500
-   no switchport
-   ip address 10.255.255.12/31
+   ip address 10.255.255.7/31
 ```
 
 ### Loopback Interfaces
@@ -252,7 +236,7 @@ interface Ethernet4
 
 | Interface | Description | VRF | IP Address |
 | --------- | ----------- | --- | ---------- |
-| Loopback0 | ROUTER_ID | default | 10.255.0.1/32 |
+| Loopback0 | ROUTER_ID | default | 10.255.0.8/32 |
 
 ##### IPv6
 
@@ -267,7 +251,7 @@ interface Ethernet4
 interface Loopback0
    description ROUTER_ID
    no shutdown
-   ip address 10.255.0.1/32
+   ip address 10.255.0.8/32
 ```
 
 ## Routing
@@ -330,7 +314,7 @@ ASN Notation: asplain
 
 | BGP AS | Router ID |
 | ------ | --------- |
-| 65100 | 10.255.0.1 |
+| 65104 | 10.255.0.8 |
 
 | BGP Tuning |
 | ---------- |
@@ -352,17 +336,15 @@ ASN Notation: asplain
 
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain | Route-Reflector Client | Passive | TTL Max Hops |
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- | ---------------------- | ------- | ------------ |
-| 10.255.255.1 | 65101 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
-| 10.255.255.5 | 65101 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
-| 10.255.255.9 | 65102 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
-| 10.255.255.13 | 65102 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 10.255.255.4 | 65102 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 10.255.255.6 | 65102 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
 
 #### Router BGP Device Configuration
 
 ```eos
 !
-router bgp 65100
-   router-id 10.255.0.1
+router bgp 65104
+   router-id 10.255.0.8
    update wait-install
    no bgp default ipv4-unicast
    maximum-paths 4 ecmp 4
@@ -370,18 +352,12 @@ router bgp 65100
    neighbor IPv4-UNDERLAY-PEERS password 7 <removed>
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 10.255.255.1 peer group IPv4-UNDERLAY-PEERS
-   neighbor 10.255.255.1 remote-as 65101
-   neighbor 10.255.255.1 description DC31_L3_LEAF_1_1_Ethernet1
-   neighbor 10.255.255.5 peer group IPv4-UNDERLAY-PEERS
-   neighbor 10.255.255.5 remote-as 65101
-   neighbor 10.255.255.5 description DC31_L3_LEAF_1_2_Ethernet1
-   neighbor 10.255.255.9 peer group IPv4-UNDERLAY-PEERS
-   neighbor 10.255.255.9 remote-as 65102
-   neighbor 10.255.255.9 description DC31_L3_LEAF_2_1_Ethernet1
-   neighbor 10.255.255.13 peer group IPv4-UNDERLAY-PEERS
-   neighbor 10.255.255.13 remote-as 65102
-   neighbor 10.255.255.13 description DC31_L3_LEAF_2_2_Ethernet1
+   neighbor 10.255.255.4 peer group IPv4-UNDERLAY-PEERS
+   neighbor 10.255.255.4 remote-as 65102
+   neighbor 10.255.255.4 description DC31_L3_LEAF_2_1_Ethernet3
+   neighbor 10.255.255.6 peer group IPv4-UNDERLAY-PEERS
+   neighbor 10.255.255.6 remote-as 65102
+   neighbor 10.255.255.6 description DC31_L3_LEAF_2_2_Ethernet3
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family ipv4

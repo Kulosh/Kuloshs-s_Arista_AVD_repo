@@ -1,0 +1,34 @@
+---
+
+
+l2leaf:
+  defaults:
+    platform: cEOS-lab
+    spanning_tree_mode: mstp
+    
+    loopback_ipv4_pool: 10.255.0.0/27
+    loopback_ipv4_offset: 6
+
+    uplink_ipv4_pool: 10.255.255.0/27
+
+
+  node_groups:
+    - group: DC31_L2_LEAVES_1
+      bgp_as: 65103
+      # uplink_interfaces: ['Ethernet1', 'Ethernet2']  
+      uplink_switches: ['DC31_L3_LEAF_1_1', 'DC31_L3_LEAF_1_2']
+      nodes:
+        - name: DC31_L2_LEAF_1_1
+          id: 1
+          mgmt_ip: 172.19.180.13/20
+          uplink_switch_interfaces: [Ethernet3, Ethernet3]
+
+    - group: DC31_L2_LEAVES_2
+      bgp_as: 65104
+      # uplink_interfaces: ['Ethernet1', 'Ethernet2']  
+      uplink_switches: ['DC31_L3_LEAF_2_1', 'DC31_L3_LEAF_2_2']
+      nodes:
+        - name: DC31_L2_LEAF_2_1
+          id: 2
+          mgmt_ip: 172.19.180.23/20
+          uplink_switch_interfaces: [Ethernet3, Ethernet3]
