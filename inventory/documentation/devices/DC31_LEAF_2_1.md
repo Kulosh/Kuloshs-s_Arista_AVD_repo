@@ -349,6 +349,7 @@ router bgp 65102
    no bgp default ipv4-unicast
    maximum-paths 4 ecmp 4
    neighbor IPv4-UNDERLAY-PEERS peer group
+   neighbor IPv4-UNDERLAY-PEERS password 7 <removed>
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor 10.255.255.8 peer group IPv4-UNDERLAY-PEERS

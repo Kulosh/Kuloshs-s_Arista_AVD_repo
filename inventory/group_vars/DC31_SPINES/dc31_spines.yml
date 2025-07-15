@@ -1,0 +1,26 @@
+---
+node_type_keys:
+  - key: spine
+    type: spine
+
+# Variables for spine
+spine:
+  defaults:
+    platform: cEOS-lab
+    # Pool of IPv4 addresses to configure interface Loopback0 used for BGP EVPN sessions
+    loopback_ipv4_pool: 10.255.0.0/27
+
+  node_groups:
+    - group: DC31_SPINES
+      bgp_as: 65100
+      nodes:
+        - name: DC31_SPINE_1
+          id: 1
+          # Rack must be a string, not an integer
+          rack: '1'
+          mgmt_ip: 172.19.180.1/20
+
+        - name: DC31_SPINE_2
+          id: 2
+          rack: '2'
+          mgmt_ip: 172.19.180.2/20
