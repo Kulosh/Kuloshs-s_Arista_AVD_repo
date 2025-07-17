@@ -165,14 +165,12 @@ management api http-commands
 
 | User | Privilege | Role | Disabled | Shell |
 | ---- | --------- | ---- | -------- | ----- |
-| arista | 15 | network-admin | False | - |
 | cvpadmin | 15 | network-admin | False | - |
 
 #### Local Users Device Configuration
 
 ```eos
 !
-username arista privilege 15 role network-admin secret sha512 <removed>
 username cvpadmin privilege 15 role network-admin nopassword
 ```
 
@@ -255,8 +253,6 @@ vlan internal order ascending range 1006 1199
 | 22 | VRF11_VLAN22 | - |
 | 3009 | MLAG_L3_VRF_VRF10 | MLAG |
 | 3010 | MLAG_L3_VRF_VRF11 | MLAG |
-| 3401 | L2_VLAN3401 | - |
-| 3402 | L2_VLAN3402 | - |
 | 4093 | MLAG_L3 | MLAG |
 | 4094 | MLAG | MLAG |
 
@@ -284,12 +280,6 @@ vlan 3010
    name MLAG_L3_VRF_VRF11
    trunk group MLAG
 !
-vlan 3401
-   name L2_VLAN3401
-!
-vlan 3402
-   name L2_VLAN3402
-!
 vlan 4093
    name MLAG_L3
    trunk group MLAG
@@ -309,7 +299,6 @@ vlan 4094
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
-| Ethernet3 | L2_DC31_L2_LEAF_1_1_Ethernet1 | *trunk | *11-12,21-22,3401-3402 | *- | *- | 3 |
 | Ethernet4 | SERVER_DC31_SERVER_1_Ethernet1 | *trunk | *11-12,21-22 | *4092 | *- | 4 |
 | Ethernet7 | MLAG_DC31_L3_LEAF_1_2_Ethernet7 | *trunk | *- | *- | *MLAG | 7 |
 | Ethernet8 | MLAG_DC31_L3_LEAF_1_2_Ethernet8 | *trunk | *- | *- | *MLAG | 7 |
@@ -341,11 +330,6 @@ interface Ethernet2
    no switchport
    ip address 10.255.255.3/31
 !
-interface Ethernet3
-   description L2_DC31_L2_LEAF_1_1_Ethernet1
-   no shutdown
-   channel-group 3 mode active
-!
 interface Ethernet4
    description SERVER_DC31_SERVER_1_Ethernet1
    no shutdown
@@ -370,24 +354,15 @@ interface Ethernet8
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel3 | L2_DC31_L2_LEAF_1_1_Port-Channel1 | trunk | 11-12,21-22,3401-3402 | - | - | - | - | 3 | - |
-| Port-Channel4 | SERVER_DC31_SERVER_1_Bond1 | trunk | 11-12,21-22 | 4092 | - | - | - | 4 | - |
+| Port-Channel4 | SERVER_DC31_SERVER_1 | trunk | 11-12,21-22 | 4092 | - | - | - | 4 | - |
 | Port-Channel7 | MLAG_DC31_L3_LEAF_1_2_Port-Channel7 | trunk | - | - | MLAG | - | - | - | - |
 
 #### Port-Channel Interfaces Device Configuration
 
 ```eos
 !
-interface Port-Channel3
-   description L2_DC31_L2_LEAF_1_1_Port-Channel1
-   no shutdown
-   switchport trunk allowed vlan 11-12,21-22,3401-3402
-   switchport mode trunk
-   switchport
-   mlag 3
-!
 interface Port-Channel4
-   description SERVER_DC31_SERVER_1_Bond1
+   description SERVER_DC31_SERVER_1
    no shutdown
    switchport trunk native vlan 4092
    switchport trunk allowed vlan 11-12,21-22
@@ -555,8 +530,6 @@ interface Vlan4094
 | 12 | 10012 | - | - |
 | 21 | 10021 | - | - |
 | 22 | 10022 | - | - |
-| 3401 | 13401 | - | - |
-| 3402 | 13402 | - | - |
 
 ##### VRF to VNI and Multicast Group Mappings
 
@@ -578,8 +551,6 @@ interface Vxlan1
    vxlan vlan 12 vni 10012
    vxlan vlan 21 vni 10021
    vxlan vlan 22 vni 10022
-   vxlan vlan 3401 vni 13401
-   vxlan vlan 3402 vni 13402
    vxlan vrf VRF10 vni 10
    vxlan vrf VRF11 vni 11
 ```
@@ -730,8 +701,6 @@ ASN Notation: asplain
 | 12 | 10.255.0.3:10012 | 10012:10012 | - | - | learned |
 | 21 | 10.255.0.3:10021 | 10021:10021 | - | - | learned |
 | 22 | 10.255.0.3:10022 | 10022:10022 | - | - | learned |
-| 3401 | 10.255.0.3:13401 | 13401:13401 | - | - | learned |
-| 3402 | 10.255.0.3:13402 | 13402:13402 | - | - | learned |
 
 #### Router BGP VRFs
 
@@ -753,11 +722,9 @@ router bgp 65101
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
    neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
-   neighbor EVPN-OVERLAY-PEERS password 7 <removed>
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS password 7 <removed>
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor MLAG-IPv4-UNDERLAY-PEER peer group
@@ -765,7 +732,6 @@ router bgp 65101
    neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
    neighbor MLAG-IPv4-UNDERLAY-PEER description DC31_L3_LEAF_1_2
    neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
-   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 <removed>
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
    neighbor 10.255.0.1 peer group EVPN-OVERLAY-PEERS
@@ -802,16 +768,6 @@ router bgp 65101
    vlan 22
       rd 10.255.0.3:10022
       route-target both 10022:10022
-      redistribute learned
-   !
-   vlan 3401
-      rd 10.255.0.3:13401
-      route-target both 13401:13401
-      redistribute learned
-   !
-   vlan 3402
-      rd 10.255.0.3:13402
-      route-target both 13402:13402
       redistribute learned
    !
    address-family evpn

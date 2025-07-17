@@ -16,10 +16,10 @@ all:
                 DC31_L3_LEAF_2_1:
                 DC31_L3_LEAF_2_2:
                   
-            DC31_L2_LEAVES:
-              hosts:
-                DC31_L2_LEAF_1_1:
-                DC31_L2_LEAF_2_1:
+            # DC31_L2_LEAVES:
+            #   hosts:
+            #     DC31_L2_LEAF_1_1:
+            #     DC31_L2_LEAF_2_1:
 
     NETWORK_SERVICES:
       children:

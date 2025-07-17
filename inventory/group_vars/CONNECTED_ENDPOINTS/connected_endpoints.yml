@@ -21,15 +21,14 @@ servers:
         spanning_tree_portfast: edge
 
         port_channel:
-          endpoint_port_channel: Bond1
           mode: active
 
-      - endpoint_ports: [iLO]
-        switch_ports: [Ethernet4]
-        switches: [DC31_L2_LEAF_1_1]
-        vlans: 11
-        mode: access
-        spanning_tree_portfast: edge
+      # - endpoint_ports: [iLO]
+      #   switch_ports: [Ethernet4]
+      #   switches: [DC31_L2_LEAF_1_1]
+      #   vlans: 11
+      #   mode: access
+      #   spanning_tree_portfast: edge
 
   - name: DC31_SERVER_2
     adapters:
@@ -44,9 +43,9 @@ servers:
         port_channel:
           mode: active
 
-      - endpoint_ports: [iLO]
-        switch_ports: [Ethernet4]
-        switches: [DC31_L2_LEAF_2_1]
-        vlans: 11
-        mode: access
-        spanning_tree_portfast: edge
+      # - endpoint_ports: [iLO]
+      #   switch_ports: [Ethernet4]
+      #   switches: [DC31_L2_LEAF_2_1]
+      #   vlans: 11
+      #   mode: access
+      #   spanning_tree_portfast: edge

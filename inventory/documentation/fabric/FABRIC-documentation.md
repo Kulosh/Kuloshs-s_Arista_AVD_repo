@@ -17,8 +17,6 @@
 
 | POD | Type | Node | Management IP | Platform | Provisioned in CloudVision | Serial Number |
 | --- | ---- | ---- | ------------- | -------- | -------------------------- | ------------- |
-| FABRIC | l2leaf | DC31_L2_LEAF_1_1 | 172.19.180.13/20 | cEOS-lab | Provisioned | - |
-| FABRIC | l2leaf | DC31_L2_LEAF_2_1 | 172.19.180.23/20 | cEOS-lab | Provisioned | - |
 | FABRIC | l3leaf | DC31_L3_LEAF_1_1 | 172.19.180.11/20 | cEOS-lab | Provisioned | - |
 | FABRIC | l3leaf | DC31_L3_LEAF_1_2 | 172.19.180.12/20 | cEOS-lab | Provisioned | - |
 | FABRIC | l3leaf | DC31_L3_LEAF_2_1 | 172.19.180.21/20 | cEOS-lab | Provisioned | - |
@@ -37,10 +35,6 @@
 
 | Type | Node | Node Interface | Peer Type | Peer Node | Peer Interface |
 | ---- | ---- | -------------- | --------- | ----------| -------------- |
-| l2leaf | DC31_L2_LEAF_1_1 | Ethernet1 | l3leaf | DC31_L3_LEAF_1_1 | Ethernet3 |
-| l2leaf | DC31_L2_LEAF_1_1 | Ethernet2 | l3leaf | DC31_L3_LEAF_1_2 | Ethernet3 |
-| l2leaf | DC31_L2_LEAF_2_1 | Ethernet1 | l3leaf | DC31_L3_LEAF_2_1 | Ethernet3 |
-| l2leaf | DC31_L2_LEAF_2_1 | Ethernet2 | l3leaf | DC31_L3_LEAF_2_2 | Ethernet3 |
 | l3leaf | DC31_L3_LEAF_1_1 | Ethernet1 | spine | DC31_SPINE_1 | Ethernet1 |
 | l3leaf | DC31_L3_LEAF_1_1 | Ethernet2 | spine | DC31_SPINE_2 | Ethernet1 |
 | l3leaf | DC31_L3_LEAF_1_1 | Ethernet7 | mlag_peer | DC31_L3_LEAF_1_2 | Ethernet7 |

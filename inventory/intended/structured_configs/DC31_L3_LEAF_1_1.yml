@@ -42,15 +42,6 @@ ethernet_interfaces:
   peer_type: spine
   switchport:
     enabled: false
-- name: Ethernet3
-  description: L2_DC31_L2_LEAF_1_1_Ethernet1
-  shutdown: false
-  channel_group:
-    id: 3
-    mode: active
-  peer: DC31_L2_LEAF_1_1
-  peer_interface: Ethernet1
-  peer_type: l2leaf
 - name: Ethernet4
   description: SERVER_DC31_SERVER_1_Ethernet1
   shutdown: false
@@ -74,10 +65,6 @@ ip_routing: true
 ip_virtual_router_mac_address: 00:1c:73:00:00:99
 is_deployed: true
 local_users:
-- name: arista
-  privilege: 15
-  role: network-admin
-  sha512_password: $6$Enl0WfE32FthwyiJ$yTyGaEJ2uPKLU.F7314YtB7J1jrzrMi7ogXIRTEHQfLdLgKWWmr1UvNlZLN6AyuxET7G5aH3AI9OYRzxVTkB1.
 - name: cvpadmin
   privilege: 15
   role: network-admin
@@ -142,17 +129,8 @@ port_channel_interfaces:
     trunk:
       groups:
       - MLAG
-- name: Port-Channel3
-  description: L2_DC31_L2_LEAF_1_1_Port-Channel1
-  shutdown: false
-  mlag: 3
-  switchport:
-    enabled: true
-    mode: trunk
-    trunk:
-      allowed_vlan: 11-12,21-22,3401-3402
 - name: Port-Channel4
-  description: SERVER_DC31_SERVER_1_Bond1
+  description: SERVER_DC31_SERVER_1
   shutdown: false
   mlag: 4
   spanning_tree_portfast: edge
@@ -217,13 +195,11 @@ router_bgp:
     remote_as: '65101'
     description: DC31_L3_LEAF_1_2
     next_hop_self: true
-    password: 4b21pAdCvWeAqpcKDFMdWw==
     send_community: all
     maximum_routes: 12000
     route_map_in: RM-MLAG-PEER-IN
   - name: IPv4-UNDERLAY-PEERS
     type: ipv4
-    password: 7x4B4rnJhZB438m9+BrBfQ==
     send_community: all
     maximum_routes: 12000
   - name: EVPN-OVERLAY-PEERS
@@ -231,7 +207,6 @@ router_bgp:
     update_source: Loopback0
     bfd: true
     ebgp_multihop: 3
-    password: Q4fqtbqcZ7oQuKfuWtNGRQ==
     send_community: all
     maximum_routes: 0
   neighbors:
@@ -294,22 +269,6 @@ router_bgp:
     route_targets:
       both:
       - 10022:10022
-    redistribute_routes:
-    - learned
-  - id: 3401
-    tenant: TENANT1
-    rd: 10.255.0.3:13401
-    route_targets:
-      both:
-      - 13401:13401
-    redistribute_routes:
-    - learned
-  - id: 3402
-    tenant: TENANT1
-    rd: 10.255.0.3:13402
-    route_targets:
-      both:
-      - 13402:13402
     redistribute_routes:
     - learned
   address_family_evpn:
@@ -476,12 +435,6 @@ vlans:
   trunk_groups:
   - MLAG
   tenant: TENANT1
-- id: 3401
-  name: L2_VLAN3401
-  tenant: TENANT1
-- id: 3402
-  name: L2_VLAN3402
-  tenant: TENANT1
 vrfs:
 - name: MGMT
   ip_routing: false
@@ -507,10 +460,6 @@ vxlan_interface:
         vni: 10021
       - id: 22
         vni: 10022
-      - id: 3401
-        vni: 13401
-      - id: 3402
-        vni: 13402
       vrfs:
       - name: VRF10
         vni: 10
