@@ -1,4 +1,3 @@
 ---
 # Default gateway used for the management interface
 mgmt_gateway: 172.16.1.1
-mgmt_interface: Management1
