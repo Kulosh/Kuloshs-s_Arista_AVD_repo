@@ -1,6 +1,6 @@
 # VxLAN
 tenants: 
-  - name: TENANT1
+  - name: VXLAN
     mac_vrf_vni_base: 10000 
     vrfs: 
       - name: VRF10
