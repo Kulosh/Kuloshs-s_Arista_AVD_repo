@@ -36,5 +36,3 @@ tenants:
       - id: 99
         vni_override: 1099
         name: 99_L2_VLAN
-
-      
