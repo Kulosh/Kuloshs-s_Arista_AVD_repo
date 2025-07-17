@@ -59,7 +59,11 @@ duplicate_dict_key=error
 inventory=~/lab/avd/inventory/inventory.yml
 ```
 
-Now, as it is useless to rewrite here the Arista documentation, I am going to refer you to the [Arista AVD 5.4 guide](https://avd.arista.com/5.4/index.html) and before you leave, it is important to stick to the order in which the commands and settings in the config are being run or else you might run into problems.
+Now, as it is useless to rewrite here the Arista documentation, I am going to refer you to the [Arista AVD 5.4 guide](https://avd.arista.com/5.4/index.html) and before you leave, Here are important notes:
+- Abide the order of the commands and configs in config files
+- Be aware of using correct name from `inventory.yml` when naming folders in `group_vars`
+
+If not, it is possible that you would run into problems
 
 <br>
 
