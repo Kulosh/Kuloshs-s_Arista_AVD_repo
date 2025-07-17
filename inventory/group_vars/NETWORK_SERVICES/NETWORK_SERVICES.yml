@@ -1,6 +1,6 @@
 # VxLAN
 tenants: 
-  - name: VXLAN
+  - name: TENANT1
     mac_vrf_vni_base: 10000 
     vrfs: 
       - name: VRF10
@@ -31,3 +31,10 @@ tenants:
             name: VRF11_VLAN22
             enabled: true
             ip_address_virtual: 10.10.22.1/24
+
+    l2vlans:
+      - id: 99
+        vni_override: 1099
+        name: 99_L2_VLAN
+
+      

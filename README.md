@@ -8,6 +8,7 @@ My configs are based on Arista's Single DC L3LS topology and configs, however, t
 
 - [Arista AVD 5.4 guide](https://avd.arista.com/5.4/index.html)
 - [Arista AVD 4.4 guide](https://avd.arista.com/4.4/index.html)
+- [Input variables](https://avd.arista.com/5.4/ansible_collections/arista/avd/roles/eos_designs/docs/input-variables.html)
 
 Those guide contains step-by-step instruction on how to install ansible and arista.avd collection
 

@@ -240,7 +240,7 @@ router_bgp:
       route_map: RM-CONN-2-BGP
   vlans:
   - id: 11
-    tenant: VXLAN
+    tenant: TENANT1
     rd: 10.255.0.3:10011
     route_targets:
       both:
@@ -248,7 +248,7 @@ router_bgp:
     redistribute_routes:
     - learned
   - id: 12
-    tenant: VXLAN
+    tenant: TENANT1
     rd: 10.255.0.3:10012
     route_targets:
       both:
@@ -256,7 +256,7 @@ router_bgp:
     redistribute_routes:
     - learned
   - id: 21
-    tenant: VXLAN
+    tenant: TENANT1
     rd: 10.255.0.3:10021
     route_targets:
       both:
@@ -264,11 +264,19 @@ router_bgp:
     redistribute_routes:
     - learned
   - id: 22
-    tenant: VXLAN
+    tenant: TENANT1
     rd: 10.255.0.3:10022
     route_targets:
       both:
       - 10022:10022
+    redistribute_routes:
+    - learned
+  - id: 99
+    tenant: TENANT1
+    rd: 10.255.0.3:1099
+    route_targets:
+      both:
+      - 1099:1099
     redistribute_routes:
     - learned
   address_family_evpn:
@@ -362,40 +370,40 @@ vlan_interfaces:
   shutdown: false
   vrf: VRF10
   ip_address_virtual: 10.10.11.1/24
-  tenant: VXLAN
+  tenant: TENANT1
 - name: Vlan12
   description: VRF10_VLAN12
   shutdown: false
   vrf: VRF10
   ip_address_virtual: 10.10.12.1/24
-  tenant: VXLAN
+  tenant: TENANT1
 - name: Vlan3009
   description: MLAG_L3_VRF_VRF10
   shutdown: false
   vrf: VRF10
   ip_address: 11.255.1.0/31
   mtu: 1500
-  tenant: VXLAN
+  tenant: TENANT1
   type: underlay_peering
 - name: Vlan21
   description: VRF11_VLAN21
   shutdown: false
   vrf: VRF11
   ip_address_virtual: 10.10.21.1/24
-  tenant: VXLAN
+  tenant: TENANT1
 - name: Vlan22
   description: VRF11_VLAN22
   shutdown: false
   vrf: VRF11
   ip_address_virtual: 10.10.22.1/24
-  tenant: VXLAN
+  tenant: TENANT1
 - name: Vlan3010
   description: MLAG_L3_VRF_VRF11
   shutdown: false
   vrf: VRF11
   ip_address: 11.255.1.0/31
   mtu: 1500
-  tenant: VXLAN
+  tenant: TENANT1
   type: underlay_peering
 vlan_internal_order:
   allocation: ascending
@@ -415,35 +423,38 @@ vlans:
   tenant: system
 - id: 11
   name: VRF10_VLAN11
-  tenant: VXLAN
+  tenant: TENANT1
 - id: 12
   name: VRF10_VLAN12
-  tenant: VXLAN
+  tenant: TENANT1
 - id: 3009
   name: MLAG_L3_VRF_VRF10
   trunk_groups:
   - MLAG
-  tenant: VXLAN
+  tenant: TENANT1
 - id: 21
   name: VRF11_VLAN21
-  tenant: VXLAN
+  tenant: TENANT1
 - id: 22
   name: VRF11_VLAN22
-  tenant: VXLAN
+  tenant: TENANT1
 - id: 3010
   name: MLAG_L3_VRF_VRF11
   trunk_groups:
   - MLAG
-  tenant: VXLAN
+  tenant: TENANT1
+- id: 99
+  name: 99_L2_VLAN
+  tenant: TENANT1
 vrfs:
 - name: MGMT
   ip_routing: false
 - name: VRF10
   ip_routing: true
-  tenant: VXLAN
+  tenant: TENANT1
 - name: VRF11
   ip_routing: true
-  tenant: VXLAN
+  tenant: TENANT1
 vxlan_interface:
   vxlan1:
     description: DC31_L3_LEAF_1_1_VTEP
@@ -460,6 +471,8 @@ vxlan_interface:
         vni: 10021
       - id: 22
         vni: 10022
+      - id: 99
+        vni: 1099
       vrfs:
       - name: VRF10
         vni: 10

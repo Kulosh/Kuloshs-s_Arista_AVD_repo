@@ -251,6 +251,7 @@ vlan internal order ascending range 1006 1199
 | 12 | VRF10_VLAN12 | - |
 | 21 | VRF11_VLAN21 | - |
 | 22 | VRF11_VLAN22 | - |
+| 99 | 99_L2_VLAN | - |
 | 3009 | MLAG_L3_VRF_VRF10 | MLAG |
 | 3010 | MLAG_L3_VRF_VRF11 | MLAG |
 | 4093 | MLAG_L3 | MLAG |
@@ -271,6 +272,9 @@ vlan 21
 !
 vlan 22
    name VRF11_VLAN22
+!
+vlan 99
+   name 99_L2_VLAN
 !
 vlan 3009
    name MLAG_L3_VRF_VRF10
@@ -530,6 +534,7 @@ interface Vlan4094
 | 12 | 10012 | - | - |
 | 21 | 10021 | - | - |
 | 22 | 10022 | - | - |
+| 99 | 1099 | - | - |
 
 ##### VRF to VNI and Multicast Group Mappings
 
@@ -551,6 +556,7 @@ interface Vxlan1
    vxlan vlan 12 vni 10012
    vxlan vlan 21 vni 10021
    vxlan vlan 22 vni 10022
+   vxlan vlan 99 vni 1099
    vxlan vrf VRF10 vni 10
    vxlan vrf VRF11 vni 11
 ```
@@ -701,6 +707,7 @@ ASN Notation: asplain
 | 12 | 10.255.0.3:10012 | 10012:10012 | - | - | learned |
 | 21 | 10.255.0.3:10021 | 10021:10021 | - | - | learned |
 | 22 | 10.255.0.3:10022 | 10022:10022 | - | - | learned |
+| 99 | 10.255.0.3:1099 | 1099:1099 | - | - | learned |
 
 #### Router BGP VRFs
 
@@ -768,6 +775,11 @@ router bgp 65101
    vlan 22
       rd 10.255.0.3:10022
       route-target both 10022:10022
+      redistribute learned
+   !
+   vlan 99
+      rd 10.255.0.3:1099
+      route-target both 1099:1099
       redistribute learned
    !
    address-family evpn
