@@ -1,4 +1,5 @@
 ---
+type: l3leaf
 
 # Variables for l3leaf
 l3leaf:
@@ -27,36 +28,30 @@ l3leaf:
   node_groups:
     - group: DC31_L3_LEAVES_1
       bgp_as: 65101
-
       nodes:
       - name: DC31_L3_LEAF_1_1
         id: 1
         rack: '1'
         mgmt_ip: 172.19.180.11/20
         uplink_switch_interfaces: [Ethernet1, Ethernet1]
-        mlag_interfaces: ['Ethernet7', 'Ethernet8']
 
       - name: DC31_L3_LEAF_1_2
         id: 2
         rack: '1'
         mgmt_ip: 172.19.180.12/20
         uplink_switch_interfaces: [Ethernet2, Ethernet2]
-        mlag_interfaces: ['Ethernet7', 'Ethernet8']
 
     - group: DC31_L3_LEAVES_2
       bgp_as: 65102
-
       nodes:
       - name: DC31_L3_LEAF_2_1
         id: 3
         rack: '2'
         mgmt_ip: 172.19.180.21/20
         uplink_switch_interfaces: [Ethernet3, Ethernet3]
-        mlag_interfaces: ['Ethernet7', 'Ethernet8']
 
       - name: DC31_L3_LEAF_2_2
         id: 4
         rack: '2'
         mgmt_ip: 172.19.180.22/20
         uplink_switch_interfaces: [Ethernet4, Ethernet4]
-        mlag_interfaces: ['Ethernet7', 'Ethernet8']

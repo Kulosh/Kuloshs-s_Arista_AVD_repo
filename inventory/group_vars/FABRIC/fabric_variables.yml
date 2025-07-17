@@ -6,6 +6,10 @@ eos_designs_documentation:
   topology_csv: true
   p2p_links_csv: true
 
+# Under/overlay routing protocol
+underlay_routing_protocol: ebgp
+overlay_routing_protocol: ebgp
+
 # Local users
 local_users:
   - name: cvpadmin
@@ -13,9 +17,36 @@ local_users:
     role: network-admin
     no_password: true
 
-# Under/overlay routing protocol
-underlay_routing_protocol: ebgp
-overlay_routing_protocol: ebgp
+  - name: arista
+    privilege: 15
+    role: network-admin
+    sha512_password: "$6$Enl0WfE32FthwyiJ$yTyGaEJ2uPKLU.F7314YtB7J1jrzrMi7ogXIRTEHQfLdLgKWWmr1UvNlZLN6AyuxET7G5aH3AI9OYRzxVTkB1."
+
+bgp_peer_groups: 
+  evpn_overlay_peers:
+    password: Q4fqtbqcZ7oQuKfuWtNGRQ==
+  ipv4_underlay_peers:
+    password: 7x4B4rnJhZB438m9+BrBfQ==
+  mlag_ipv4_underlay_peer:
+    password: 4b21pAdCvWeAqpcKDFMdWw==
+
+# P2P
+p2p_uplinks_mtu: 1500
+
+# Default interfaces for each node type
+default_interfaces:
+  - types: [spine]
+    platforms: [default]
+    uplink_interfaces: [Ethernet1-4]
+    downlink_interfaces: [Ethernet1-8]
+  - types: [l3leaf]
+    platforms: [default]
+    uplink_interfaces: [Ethernet1-2]
+    downlink_interfaces: [Ethernet3]
+    mlag_interfaces: [Ethernet7-8]
+  - types: [l2leaf]
+    platforms: [default]
+    uplink_interfaces: [Ethernet1-2]
 
 # DNS
 dns_settings:
@@ -27,30 +58,3 @@ ntp_settings:
   server_vrf: use_mgmt_interface_vrf
   servers:
     - name: 0.pool.ntp.org
-
-# P2P
-p2p_uplinks_mtu: 1500
-
-bgp_peer_groups: 
-  evpn_overlay_peers:
-    password: Q4fqtbqcZ7oQuKfuWtNGRQ==
-  ipv4_underlay_peers:
-    password: 7x4B4rnJhZB438m9+BrBfQ==
-  mlag_ipv4_underlay_peer:
-    password: 4b21pAdCvWeAqpcKDFMdWw==
-
-# Default interfaces for each node type
-default_interfaces:
-  - types: [spine]
-    platforms: [cEOS-lab]
-    uplink_interfaces: [Ethernet1-2]
-    downlink_interfaces: [Ethernet1-8]
-  - types: [l3leaf]
-    platforms: [cEOS-lab]
-    uplink_interfaces: [Ethernet1-2]
-    downlink_interfaces: [Ethernet3]
-    mlag_interfaces: [Ethernet7-8]
-  - types: [l2leaf]
-    platforms: [cEOS-lab]
-    uplink_interfaces: [Ethernet1-2]
-

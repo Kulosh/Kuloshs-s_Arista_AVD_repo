@@ -7,36 +7,19 @@ all:
             DC31_SPINES:
               hosts:
                 DC31_SPINE_1:
-                  type: spine
                 DC31_SPINE_2:
-                  type: spine
 
-            DC31_LEAVES:
-              children:
-                L3_LEAVES:
-                  children:
-                    DC31_L3_LEAVES_1:
-                      hosts:
-                        DC31_L3_LEAF_1_1:
-                          type: l3leaf
-                        DC31_L3_LEAF_1_2:
-                          type: l3leaf
-                    DC31_L3_LEAVES_2:
-                      hosts:
-                        DC31_L3_LEAF_2_1:
-                          type: l3leaf
-                        DC31_L3_LEAF_2_2:
-                          type: l3leaf
-                DC31_L2_LEAVES:
-                  children:
-                    DC31_L2_LEAVES_1:
-                      hosts:
-                        DC31_L2_LEAF_1_1:
-                          type: l2leaf
-                    DC31_L2_LEAVES_2:
-                      hosts:
-                        DC31_L2_LEAF_2_1:
-                          type: l2leaf
+            DC31_L3_LEAVES:
+              hosts:
+                DC31_L3_LEAF_1_1:
+                DC31_L3_LEAF_1_2:
+                DC31_L3_LEAF_2_1:
+                DC31_L3_LEAF_2_2:
+                  
+            DC31_L2_LEAVES:
+              hosts:
+                DC31_L2_LEAF_1_1:
+                DC31_L2_LEAF_2_1:
 
     NETWORK_SERVICES:
       children:

@@ -21,6 +21,7 @@ servers:
         spanning_tree_portfast: edge
 
         port_channel:
+          endpoint_port_channel: Bond1
           mode: active
 
       - endpoint_ports: [iLO]
@@ -37,7 +38,7 @@ servers:
         switches: [DC31_L3_LEAF_2_1, DC31_L3_LEAF_2_2]
         vlans: 11-12,21-22
         native_vlan: 4092
-        mode: access
+        mode: trunk
         spanning_tree_portfast: edge
 
         port_channel:

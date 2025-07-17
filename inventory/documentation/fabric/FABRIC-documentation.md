@@ -43,10 +43,14 @@
 | l2leaf | DC31_L2_LEAF_2_1 | Ethernet2 | l3leaf | DC31_L3_LEAF_2_2 | Ethernet3 |
 | l3leaf | DC31_L3_LEAF_1_1 | Ethernet1 | spine | DC31_SPINE_1 | Ethernet1 |
 | l3leaf | DC31_L3_LEAF_1_1 | Ethernet2 | spine | DC31_SPINE_2 | Ethernet1 |
+| l3leaf | DC31_L3_LEAF_1_1 | Ethernet7 | mlag_peer | DC31_L3_LEAF_1_2 | Ethernet7 |
+| l3leaf | DC31_L3_LEAF_1_1 | Ethernet8 | mlag_peer | DC31_L3_LEAF_1_2 | Ethernet8 |
 | l3leaf | DC31_L3_LEAF_1_2 | Ethernet1 | spine | DC31_SPINE_1 | Ethernet2 |
 | l3leaf | DC31_L3_LEAF_1_2 | Ethernet2 | spine | DC31_SPINE_2 | Ethernet2 |
 | l3leaf | DC31_L3_LEAF_2_1 | Ethernet1 | spine | DC31_SPINE_1 | Ethernet3 |
 | l3leaf | DC31_L3_LEAF_2_1 | Ethernet2 | spine | DC31_SPINE_2 | Ethernet3 |
+| l3leaf | DC31_L3_LEAF_2_1 | Ethernet7 | mlag_peer | DC31_L3_LEAF_2_2 | Ethernet7 |
+| l3leaf | DC31_L3_LEAF_2_1 | Ethernet8 | mlag_peer | DC31_L3_LEAF_2_2 | Ethernet8 |
 | l3leaf | DC31_L3_LEAF_2_2 | Ethernet1 | spine | DC31_SPINE_1 | Ethernet4 |
 | l3leaf | DC31_L3_LEAF_2_2 | Ethernet2 | spine | DC31_SPINE_2 | Ethernet4 |
 
@@ -56,16 +60,12 @@
 
 | Uplink IPv4 Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | ---------------- | ------------------- | ------------------ | ------------------ |
-| 10.255.255.0/27 | 32 | 24 | 75.0 % |
+| 10.255.255.0/27 | 32 | 16 | 50.0 % |
 
 ### Point-To-Point Links Node Allocation
 
 | Node | Node Interface | Node IP Address | Peer Node | Peer Interface | Peer IP Address |
 | ---- | -------------- | --------------- | --------- | -------------- | --------------- |
-| DC31_L2_LEAF_1_1 | Ethernet1 | 10.255.255.1/31 | DC31_L3_LEAF_1_1 | Ethernet3 | 10.255.255.0/31 |
-| DC31_L2_LEAF_1_1 | Ethernet2 | 10.255.255.3/31 | DC31_L3_LEAF_1_2 | Ethernet3 | 10.255.255.2/31 |
-| DC31_L2_LEAF_2_1 | Ethernet1 | 10.255.255.5/31 | DC31_L3_LEAF_2_1 | Ethernet3 | 10.255.255.4/31 |
-| DC31_L2_LEAF_2_1 | Ethernet2 | 10.255.255.7/31 | DC31_L3_LEAF_2_2 | Ethernet3 | 10.255.255.6/31 |
 | DC31_L3_LEAF_1_1 | Ethernet1 | 10.255.255.1/31 | DC31_SPINE_1 | Ethernet1 | 10.255.255.0/31 |
 | DC31_L3_LEAF_1_1 | Ethernet2 | 10.255.255.3/31 | DC31_SPINE_2 | Ethernet1 | 10.255.255.2/31 |
 | DC31_L3_LEAF_1_2 | Ethernet1 | 10.255.255.5/31 | DC31_SPINE_1 | Ethernet2 | 10.255.255.4/31 |
@@ -79,14 +79,12 @@
 
 | Loopback Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | ------------- | ------------------- | ------------------ | ------------------ |
-| 10.255.0.0/27 | 32 | 8 | 25.0 % |
+| 10.255.0.0/27 | 32 | 6 | 18.75 % |
 
 ### Loopback0 Interfaces Node Allocation
 
 | POD | Node | Loopback0 |
 | --- | ---- | --------- |
-| FABRIC | DC31_L2_LEAF_1_1 | 10.255.0.7/32 |
-| FABRIC | DC31_L2_LEAF_2_1 | 10.255.0.8/32 |
 | FABRIC | DC31_L3_LEAF_1_1 | 10.255.0.3/32 |
 | FABRIC | DC31_L3_LEAF_1_2 | 10.255.0.4/32 |
 | FABRIC | DC31_L3_LEAF_2_1 | 10.255.0.5/32 |
@@ -98,8 +96,13 @@
 
 | VTEP Loopback Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | ------------------ | ------------------- | ------------------ | ------------------ |
+| 10.255.1.0/27 | 32 | 4 | 12.5 % |
 
 ### VTEP Loopback Node allocation
 
 | POD | Node | Loopback1 |
 | --- | ---- | --------- |
+| FABRIC | DC31_L3_LEAF_1_1 | 10.255.1.3/32 |
+| FABRIC | DC31_L3_LEAF_1_2 | 10.255.1.3/32 |
+| FABRIC | DC31_L3_LEAF_2_1 | 10.255.1.5/32 |
+| FABRIC | DC31_L3_LEAF_2_2 | 10.255.1.5/32 |

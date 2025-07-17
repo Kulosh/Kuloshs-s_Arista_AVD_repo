@@ -26,6 +26,8 @@
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
   - [Router BGP](#router-bgp)
+- [BFD](#bfd)
+  - [Router BFD](#router-bfd)
 - [Filters](#filters)
   - [Prefix-lists](#prefix-lists)
   - [Route-maps](#route-maps)
@@ -148,12 +150,14 @@ management api http-commands
 
 | User | Privilege | Role | Disabled | Shell |
 | ---- | --------- | ---- | -------- | ----- |
+| arista | 15 | network-admin | False | - |
 | cvpadmin | 15 | network-admin | False | - |
 
 #### Local Users Device Configuration
 
 ```eos
 !
+username arista privilege 15 role network-admin secret sha512 <removed>
 username cvpadmin privilege 15 role network-admin nopassword
 ```
 
@@ -340,6 +344,18 @@ ASN Notation: asplain
 
 #### Router BGP Peer Groups
 
+##### EVPN-OVERLAY-PEERS
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | evpn |
+| Next-hop unchanged | True |
+| Source | Loopback0 |
+| BFD | True |
+| Ebgp multihop | 3 |
+| Send community | all |
+| Maximum routes | 0 (no limit) |
+
 ##### IPv4-UNDERLAY-PEERS
 
 | Settings | Value |
@@ -352,10 +368,22 @@ ASN Notation: asplain
 
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain | Route-Reflector Client | Passive | TTL Max Hops |
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- | ---------------------- | ------- | ------------ |
+| 10.255.0.3 | 65101 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
+| 10.255.0.4 | 65101 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
+| 10.255.0.5 | 65102 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
+| 10.255.0.6 | 65102 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
 | 10.255.255.3 | 65101 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
 | 10.255.255.7 | 65101 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
 | 10.255.255.11 | 65102 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
 | 10.255.255.15 | 65102 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
+
+#### Router BGP EVPN Address Family
+
+##### EVPN Peer Groups
+
+| Peer Group | Activate | Route-map In | Route-map Out | Encapsulation | Next-hop-self Source Interface |
+| ---------- | -------- | ------------ | ------------- | ------------- | ------------------------------ |
+| EVPN-OVERLAY-PEERS | True |  - | - | default | - |
 
 #### Router BGP Device Configuration
 
@@ -366,10 +394,30 @@ router bgp 65100
    update wait-install
    no bgp default ipv4-unicast
    maximum-paths 4 ecmp 4
+   neighbor EVPN-OVERLAY-PEERS peer group
+   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
+   neighbor EVPN-OVERLAY-PEERS update-source Loopback0
+   neighbor EVPN-OVERLAY-PEERS bfd
+   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
+   neighbor EVPN-OVERLAY-PEERS password 7 <removed>
+   neighbor EVPN-OVERLAY-PEERS send-community
+   neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor IPv4-UNDERLAY-PEERS peer group
    neighbor IPv4-UNDERLAY-PEERS password 7 <removed>
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
+   neighbor 10.255.0.3 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.255.0.3 remote-as 65101
+   neighbor 10.255.0.3 description DC31_L3_LEAF_1_1_Loopback0
+   neighbor 10.255.0.4 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.255.0.4 remote-as 65101
+   neighbor 10.255.0.4 description DC31_L3_LEAF_1_2_Loopback0
+   neighbor 10.255.0.5 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.255.0.5 remote-as 65102
+   neighbor 10.255.0.5 description DC31_L3_LEAF_2_1_Loopback0
+   neighbor 10.255.0.6 peer group EVPN-OVERLAY-PEERS
+   neighbor 10.255.0.6 remote-as 65102
+   neighbor 10.255.0.6 description DC31_L3_LEAF_2_2_Loopback0
    neighbor 10.255.255.3 peer group IPv4-UNDERLAY-PEERS
    neighbor 10.255.255.3 remote-as 65101
    neighbor 10.255.255.3 description DC31_L3_LEAF_1_1_Ethernet2
@@ -384,8 +432,30 @@ router bgp 65100
    neighbor 10.255.255.15 description DC31_L3_LEAF_2_2_Ethernet2
    redistribute connected route-map RM-CONN-2-BGP
    !
+   address-family evpn
+      neighbor EVPN-OVERLAY-PEERS activate
+   !
    address-family ipv4
+      no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
+```
+
+## BFD
+
+### Router BFD
+
+#### Router BFD Multihop Summary
+
+| Interval | Minimum RX | Multiplier |
+| -------- | ---------- | ---------- |
+| 300 | 300 | 3 |
+
+#### Router BFD Device Configuration
+
+```eos
+!
+router bfd
+   multihop interval 300 min-rx 300 multiplier 3
 ```
 
 ## Filters
